@@ -25,4 +25,3 @@ To use Swagger UI locally, run `yarn openapi`.
     ```sh
     yarn serve
     ```
-
