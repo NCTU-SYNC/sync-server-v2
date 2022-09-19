@@ -1,0 +1,350 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "version": "2.0.0-beta.1",
+    "title": "sync.muilab.org",
+    "description": "api spec for SYNC frontend SPA"
+  },
+  "servers": [
+    {
+      "url": "https://sync.muilab.org/api/v2"
+    }
+  ],
+  "paths": {
+    "/articles/feed": {
+      "get": {
+        "tags": [
+          "Article"
+        ],
+        "summary": "Feed for home page",
+        "operationId": "articleGetFeed",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "latests": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "readOnly": true
+                          },
+                          "title": {
+                            "type": "string",
+                            "example": "title"
+                          },
+                          "tags": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "default": []
+                          },
+                          "category": {
+                            "type": "string",
+                            "default": "Other"
+                          },
+                          "cardImageURI": {
+                            "description": "links to card image",
+                            "type": "string",
+                            "format": "uri",
+                            "readOnly": true
+                          },
+                          "createdTime": {
+                            "type": "string",
+                            "format": "date-time"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "title"
+                        ]
+                      }
+                    },
+                    "hero": {
+                      "description": "article data for hero card",
+                      "type": "object",
+                      "properties": {
+                        "info": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "readOnly": true
+                            },
+                            "title": {
+                              "type": "string",
+                              "example": "title"
+                            },
+                            "tags": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              },
+                              "default": []
+                            },
+                            "category": {
+                              "type": "string",
+                              "default": "Other"
+                            },
+                            "cardImageURI": {
+                              "description": "links to card image",
+                              "type": "string",
+                              "format": "uri",
+                              "readOnly": true
+                            },
+                            "createdTime": {
+                              "type": "string",
+                              "format": "date-time"
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "title"
+                          ]
+                        },
+                        "timeline": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "blockTitle": {
+                                "type": "string"
+                              },
+                              "blockDateTime": {
+                                "type": "string",
+                                "format": "date-time"
+                              },
+                              "content": {
+                                "type": "string"
+                              },
+                              "timeEnable": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "requireEdit": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "readOnly": true
+                          },
+                          "title": {
+                            "type": "string",
+                            "example": "title"
+                          },
+                          "tags": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "default": []
+                          },
+                          "category": {
+                            "type": "string",
+                            "default": "Other"
+                          },
+                          "cardImageURI": {
+                            "description": "links to card image",
+                            "type": "string",
+                            "format": "uri",
+                            "readOnly": true
+                          },
+                          "createdTime": {
+                            "type": "string",
+                            "format": "date-time"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "title"
+                        ]
+                      }
+                    },
+                    "mainSection": {
+                      "type": "object",
+                      "properties": {
+                        "subject": {
+                          "type": "string"
+                        },
+                        "articles": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "readOnly": true
+                              },
+                              "title": {
+                                "type": "string",
+                                "example": "title"
+                              },
+                              "tags": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "default": []
+                              },
+                              "category": {
+                                "type": "string",
+                                "default": "Other"
+                              },
+                              "cardImageURI": {
+                                "description": "links to card image",
+                                "type": "string",
+                                "format": "uri",
+                                "readOnly": true
+                              },
+                              "createdTime": {
+                                "type": "string",
+                                "format": "date-time"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "title"
+                            ]
+                          }
+                        }
+                      }
+                    },
+                    "hot": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "readOnly": true
+                          },
+                          "title": {
+                            "type": "string",
+                            "example": "title"
+                          },
+                          "tags": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "default": []
+                          },
+                          "category": {
+                            "type": "string",
+                            "default": "Other"
+                          },
+                          "cardImageURI": {
+                            "description": "links to card image",
+                            "type": "string",
+                            "format": "uri",
+                            "readOnly": true
+                          },
+                          "createdTime": {
+                            "type": "string",
+                            "format": "date-time"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "title"
+                        ]
+                      }
+                    },
+                    "tagRecommend": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No Articles Found"
+          }
+        }
+      }
+    },
+    "/user/auth": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Login",
+        "operationId": "userLogin",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "password": {
+                    "type": "string",
+                    "format": "password"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid email or password"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
