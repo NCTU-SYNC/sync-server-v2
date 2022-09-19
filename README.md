@@ -4,6 +4,8 @@
 
 [Swagger UI](https://nctu-sync.github.io/sync-server-v2/)
 
+To use Swagger UI locally, run `yarn openapi`.
+
 ## Installation
 
 1. Clone the repo

@@ -5,7 +5,8 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "serve": "nodemon src/index.js"
+    "serve": "nodemon src/index.js",
+    "openapi": "swagger-ui-watcher ./openapi/openapi.yaml"
   },
   "devDependencies": {
     "eslint": ">=5.16.0",
