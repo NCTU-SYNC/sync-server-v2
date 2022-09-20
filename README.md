@@ -20,8 +20,16 @@ To use Swagger UI locally, run `yarn openapi`.
     yarn install
     ```
 
-3. Run dev server
+3. Run server
 
     ```sh
     yarn serve
     ```
+
+    to run the server, or
+
+    ```sh
+    yarn dev
+    ```
+
+    to run the server with nodemon.
