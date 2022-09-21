@@ -9,8 +9,8 @@ servers:
   - url: "https://sync.muilab.org/api/v2"
 
 paths:
-  /articles/feed:
-    $ref: "paths/article/feed.yaml"
+  /articles/homepage:
+    $ref: "paths/article/Homepage.yaml"
   /user/auth:
     $ref: "paths/user/auth.yaml"
 # components:

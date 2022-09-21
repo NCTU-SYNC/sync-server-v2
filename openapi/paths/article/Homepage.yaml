@@ -1,0 +1,29 @@
+get:
+  tags:
+    - Article
+  summary: Feed for homepage.
+  operationId: articleGetHomepage
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              mainSection:
+                type: array
+                items:
+                  $ref: "../../components/ArticleInfo.yaml"
+              waitForEditSection:
+                type: array
+                items:
+                  $ref: "../../components/ArticleInfo.yaml"
+              hotSection:
+                type: array
+                items:
+                  $ref: "../../components/ArticleInfo.yaml"
+    404:
+      description: No Articles Found
+    500:
+      description: Internal Server Error

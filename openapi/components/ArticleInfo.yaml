@@ -7,7 +7,6 @@ properties:
 
   title:
     type: string
-    example: title
 
   tags:
     type: array
@@ -20,7 +19,7 @@ properties:
     default: "Other"
 
   cardImageURI:
-    description: links to card image
+    description: Link to card image.
     type: string
     format: uri
     readOnly: true
