@@ -13,6 +13,8 @@ paths:
     $ref: "paths/article/Homepage.yaml"
   /articles/{articleId}:
     $ref: "paths/article/ArticleId.yaml"
+  /articles:
+    $ref: "paths/article/Tag.yaml"
   /user/auth:
     $ref: "paths/user/auth.yaml"
 # components:
