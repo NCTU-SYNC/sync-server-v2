@@ -11,8 +11,8 @@ servers:
 paths:
   /articles/feed:
     $ref: "paths/article/feed.yaml"
-  /user/auth:
-    $ref: "paths/user/auth.yaml"
+  /user/login:
+    $ref: "paths/user/Login.yaml"
 # components:
 #   # TODO: security schemes
 #   securitySchemes:

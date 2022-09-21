@@ -1,21 +1,19 @@
-get:
+post:
   tags:
     - User
   summary: Login
   operationId: userLogin
   requestBody:
-    required: true
     content:
       application/json:
         schema:
           type: object
           properties:
-            email:
+            username:
               type: string
-              format: email
             password:
               type: string
-              format: password
+    required: true
   responses:
     200:
       description: Success
@@ -28,14 +26,6 @@ get:
             properties:
               message:
                 type: string
-                example: Invalid email or password
+                example: Invalid email or password.
     500:
       description: Internal Server Error
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              message:
-                type: string
-                example: Internal Server Error
