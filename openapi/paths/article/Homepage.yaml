@@ -14,15 +14,30 @@ get:
               mainSection:
                 type: array
                 items:
-                  $ref: "../../components/ArticleInfo.yaml"
+                  type: object
+                  properties:
+                    id: 
+                      type: string
+                    info:
+                      $ref: "../../components/ArticleInfo.yaml"
               waitForEditSection:
                 type: array
                 items:
-                  $ref: "../../components/ArticleInfo.yaml"
+                  type: object
+                  properties:
+                    id: 
+                      type: string
+                    info:
+                      $ref: "../../components/ArticleInfo.yaml"
               hotSection:
                 type: array
                 items:
-                  $ref: "../../components/ArticleInfo.yaml"
+                  type: object
+                  properties:
+                    id: 
+                      type: string
+                    info:
+                      $ref: "../../components/ArticleInfo.yaml"
     404:
       description: No Articles Found
     500:
