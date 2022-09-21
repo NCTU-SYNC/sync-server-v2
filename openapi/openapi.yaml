@@ -13,6 +13,8 @@ paths:
     $ref: "paths/article/feed.yaml"
   /user/login:
     $ref: "paths/user/Login.yaml"
+  /user/signup:
+    $ref: "paths/user/SignUp.yaml"
 # components:
 #   # TODO: security schemes
 #   securitySchemes:
