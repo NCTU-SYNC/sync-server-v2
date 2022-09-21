@@ -9,7 +9,7 @@
     "clean": "tsc --build --clean",
     "serve": "tsc --build && node dist/index.js",
     "dev": "nodemon --esm src/index.ts",
-    "openapi": "swagger-ui-watcher ./openapi/openapi.yaml"
+    "apidoc": "swagger-ui-watcher ./openapi/openapi.yaml"
   },
   "devDependencies": {
     "@types/express": "^4.17.14",
