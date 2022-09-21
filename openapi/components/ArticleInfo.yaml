@@ -1,10 +1,6 @@
 type: object
 
 properties:
-  id:
-    type: string
-    readOnly: true
-
   title:
     type: string
     example: title
@@ -30,5 +26,4 @@ properties:
     format: date-time
 
 required:
-  - id
   - title
