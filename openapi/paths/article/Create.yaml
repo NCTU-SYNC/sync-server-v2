@@ -1,0 +1,36 @@
+post:
+  tags:
+    - Article
+  summary: Create a new article.
+  operationId: articleCreate
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            info:
+              $ref: "../../components/ArticleInfo.yaml"
+            blocks:
+              type: array
+              items:
+                $ref: "../../components/ArticleBlock.yaml"
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                type: string
+    401:
+      description: Unauthorized
+    404:
+      description: Article Not Found
+    422:
+      description: Invalid Article
+    500:
+      description: Internal Server Error
