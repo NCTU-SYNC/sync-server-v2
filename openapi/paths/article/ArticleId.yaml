@@ -1,0 +1,31 @@
+get:
+  tags:
+    - Article
+  summary: Get article information and content by id.
+  operationId: articleGetById
+  parameters:
+    - name: articleId
+      in: path
+      description: Article id.
+      required: true
+      schema:
+        type: string
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              info:                
+                $ref: "../../components/ArticleInfo.yaml"
+              blocks:
+                type: array
+                items:
+                  $ref: "../../components/ArticleBlock.yaml"
+    404:
+      description: Article Not Found
+    500:
+      description: Internal Server Error
+    
