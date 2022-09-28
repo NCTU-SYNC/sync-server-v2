@@ -11,6 +11,8 @@ servers:
 paths:
   /articles/feed:
     $ref: "paths/article/feed.yaml"
+  /search/article:
+    $ref: "paths/search/article.yaml"
   /user/login:
     $ref: "paths/user/Login.yaml"
   /user/signup:
