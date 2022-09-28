@@ -4,7 +4,11 @@
 
 [Swagger UI](https://nctu-sync.github.io/sync-server-v2/)
 
-To use Swagger UI locally, run `yarn openapi`.
+To use Swagger UI locally
+
+1. Run `yarn apidoc`.
+or
+2. Use [OpenAPI (Swagger) Editor](https://marketplace.visualstudio.com/items?itemName=42Crunch.vscode-openapi) in vscode.
 
 ## Installation
 

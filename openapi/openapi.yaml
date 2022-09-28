@@ -15,8 +15,12 @@ paths:
     $ref: "paths/article/ArticleId.yaml"
   /articles/create:
     $ref: "paths/article/Create.yaml"
-  /user/auth:
-    $ref: "paths/user/auth.yaml"
+  /search/article:
+    $ref: "paths/search/article.yaml"
+  /user/login:
+    $ref: "paths/user/Login.yaml"
+  /user/signup:
+    $ref: "paths/user/SignUp.yaml"
 # components:
 #   # TODO: security schemes
 #   securitySchemes:
