@@ -4,36 +4,36 @@
 
 [Swagger UI](https://nctu-sync.github.io/sync-server-v2/)
 
-To use Swagger UI locally
-
-1. Run `yarn apidoc`.
-or
-2. Use [OpenAPI (Swagger) Editor](https://marketplace.visualstudio.com/items?itemName=42Crunch.vscode-openapi) in vscode.
+To use Swagger UI locally, please use [OpenAPI (Swagger) Editor](https://marketplace.visualstudio.com/items?itemName=42Crunch.vscode-openapi) in vscode.
 
 ## Installation
 
-1. Clone the repo
+```bash
+yarn install
+```
 
-    ```sh
-    git clone https://github.com/NCTU-SYNC/sync-server-v2.git
-    ```
+## Running the app
 
-2. Install YARN packages
+```bash
+# development
+$ yarn start
 
-    ```sh
-    yarn install
-    ```
+# watch mode
+$ yarn start:dev
 
-3. Run server
+# production mode
+$ yarn start:prod
+```
 
-    ```sh
-    yarn serve
-    ```
+## Test
 
-    to run the server, or
+```bash
+# unit tests
+$ yarn test
 
-    ```sh
-    yarn dev
-    ```
+# e2e tests
+$ yarn test:e2e
 
-    to run the server with nodemon.
+# test coverage
+$ yarn test:cov
+```
