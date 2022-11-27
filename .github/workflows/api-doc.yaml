@@ -14,8 +14,6 @@ jobs:
         with:
           node-version: '16'
       - run: yarn install
-      - name: Generate OpenAPI document
-        run: yarn swagger-ui-watcher ./openapi/openapi.yaml --bundle=./bundled.json
       - name: Generate Swagger UI
         uses: Legion2/swagger-ui-action@v1
         with:
