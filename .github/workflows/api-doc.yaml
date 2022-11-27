@@ -1,12 +1,9 @@
-name: Deploy openapi document
+name: deploy-openapi-document
 
 on:
   push:
     branches:
       - main
-    paths:
-      - openapi/**
-      - .github/workflows/openapi.yaml
 
 jobs:
   build:
@@ -23,7 +20,7 @@ jobs:
         uses: Legion2/swagger-ui-action@v1
         with:
           output: swagger-ui
-          spec-file: ./bundled.json
+          spec-url: http://localhost:3000/api
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
