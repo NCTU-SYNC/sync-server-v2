@@ -1,3 +1,4 @@
+import { INestApplication } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import {
   SwaggerModule,
@@ -6,9 +7,7 @@ import {
 } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 
-async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-
+function setupSwagger(app: INestApplication) {
   const config = new DocumentBuilder()
     .setTitle('SYNC API')
     .setDescription('The SYNC API spec')
@@ -22,7 +21,14 @@ async function bootstrap() {
   };
 
   SwaggerModule.setup('api', app, document, customOptions);
+}
+
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+
+  setupSwagger(app);
 
   await app.listen(3000);
 }
+
 bootstrap();
