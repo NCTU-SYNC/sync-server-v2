@@ -21,7 +21,7 @@ function setupSwagger(app: INestApplication) {
     explorer: true,
   };
 
-  SwaggerModule.setup('api', app, document, customOptions);
+  SwaggerModule.setup('doc', app, document, customOptions);
 }
 
 async function bootstrap() {
