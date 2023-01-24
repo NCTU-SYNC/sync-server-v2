@@ -1,4 +1,5 @@
 import { INestApplication } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import {
   SwaggerModule,
@@ -28,7 +29,12 @@ async function bootstrap() {
 
   setupSwagger(app);
 
-  await app.listen(3000);
+  const configService = app.get(ConfigService);
+  const port = configService.get('port', 3000);
+  const baseUrl = configService.get('baseUrl', '/api');
+
+  app.setGlobalPrefix(baseUrl);
+  await app.listen(port);
 }
 
 bootstrap();
