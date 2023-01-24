@@ -1,6 +1,10 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import environmentConfig from 'config/environment.config';
+
+const environmentConfig = () => ({
+  port: parseInt(process.env.PORT, 10),
+  baseUrl: '/api',
+});
 
 @Module({
   imports: [
