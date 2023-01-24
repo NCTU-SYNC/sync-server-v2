@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 
-const environmentConfig = () => ({
+const ENV_CONFIG = () => ({
   port: parseInt(process.env.PORT, 10),
   baseUrl: '/api',
 });
@@ -9,7 +9,7 @@ const environmentConfig = () => ({
 @Module({
   imports: [
     ConfigModule.forRoot({
-      load: [environmentConfig],
+      load: [ENV_CONFIG],
     }),
   ],
   controllers: [],
