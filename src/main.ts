@@ -1,4 +1,4 @@
-import { INestApplication } from '@nestjs/common';
+import { INestApplication, VersioningType } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import {
@@ -34,6 +34,7 @@ async function bootstrap() {
   const baseUrl = configService.get('baseUrl', '/api');
 
   app.setGlobalPrefix(baseUrl);
+  app.enableVersioning({ type: VersioningType.URI });
   await app.listen(port);
 }
 
