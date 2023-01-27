@@ -30,8 +30,8 @@ async function bootstrap() {
   setupSwagger(app);
 
   const configService = app.get(ConfigService);
-  const port = configService.get('port', 3000);
-  const baseUrl = configService.get('baseUrl', '/api');
+  const port = configService.get<number>('port', 3000);
+  const baseUrl = configService.get<string>('baseUrl', '/api');
 
   app.setGlobalPrefix(baseUrl);
   app.enableVersioning({ type: VersioningType.URI });
