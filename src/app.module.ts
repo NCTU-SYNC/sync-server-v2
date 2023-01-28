@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { MongooseModule } from '@nestjs/mongoose';
 
 const ENV_CONFIG = () => ({
   port: parseInt(process.env.PORT, 10) || 3000,
@@ -10,6 +11,15 @@ const ENV_CONFIG = () => ({
   imports: [
     ConfigModule.forRoot({
       load: [ENV_CONFIG],
+      envFilePath: ['config/mongodb.env'],
+      expandVariables: true,
+    }),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (config: ConfigService) => ({
+        uri: config.get<string>('MONGODB_URI'),
+      }),
     }),
   ],
   controllers: [],
