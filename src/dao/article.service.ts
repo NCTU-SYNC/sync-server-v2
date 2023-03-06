@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, QueryOptions } from 'mongoose';
+import { Model, QueryOptions, Types } from 'mongoose';
 import { Article, ArticleDocument } from '../schemas/article.schema';
-import mongoose from 'mongoose';
 
 @Injectable()
 export class ArticleService {
@@ -18,7 +17,7 @@ export class ArticleService {
     return this.articleModel.find(filter ?? {}, null, options).exec();
   }
 
-  async findOneById(id: mongoose.Types.ObjectId): Promise<Article> {
+  async findOneById(id: Types.ObjectId): Promise<Article> {
     return this.articleModel.findById(id).exec();
   }
 
@@ -26,14 +25,11 @@ export class ArticleService {
     return this.articleModel.create(article);
   }
 
-  async updateOneById(
-    id: mongoose.Types.ObjectId,
-    partialArticle: Partial<Article>,
-  ) {
+  async updateOneById(id: Types.ObjectId, partialArticle: Partial<Article>) {
     return this.articleModel.updateOne({ _id: id }, partialArticle).exec();
   }
 
-  async deleteOneById(id: mongoose.Types.ObjectId) {
+  async deleteOneById(id: Types.ObjectId) {
     return this.articleModel.deleteOne({ _id: id }).exec();
   }
 }

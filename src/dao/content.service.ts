@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import mongoose, { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { Content, ContentDocument } from '../schemas/content.schema';
 
 @Injectable()
@@ -10,7 +10,7 @@ export class ContentService {
     private readonly contentModel: Model<ContentDocument>,
   ) {}
 
-  async findOneById(id: mongoose.Types.ObjectId): Promise<Content> {
+  async findOneById(id: Types.ObjectId): Promise<Content> {
     return this.contentModel.findById(id).exec();
   }
 
@@ -18,14 +18,11 @@ export class ContentService {
     return this.contentModel.create(content);
   }
 
-  async updateOneById(
-    id: mongoose.Types.ObjectId,
-    partialContent: Partial<Content>,
-  ) {
+  async updateOneById(id: Types.ObjectId, partialContent: Partial<Content>) {
     return this.contentModel.updateOne({ _id: id }, partialContent).exec();
   }
 
-  async deleteOneById(id: mongoose.Types.ObjectId) {
+  async deleteOneById(id: Types.ObjectId) {
     return this.contentModel.deleteOne({ _id: id }).exec();
   }
 }

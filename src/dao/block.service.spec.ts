@@ -2,11 +2,11 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { BlockService } from './block.service';
 import { getModelToken } from '@nestjs/mongoose';
 import { Block, BlockSchema } from '../schemas/block.schema';
-import mongoose, { Model } from 'mongoose';
+import * as mongoose from 'mongoose';
 
 describe('BlockService', () => {
   let service: BlockService;
-  let model: Model<Block>;
+  let model: mongoose.Model<Block>;
 
   beforeAll(async () => {
     await mongoose.connect(global.__MONGO_URI__);
@@ -28,7 +28,7 @@ describe('BlockService', () => {
     }).compile();
 
     service = module.get<BlockService>(BlockService);
-    model = module.get<Model<Block>>(getModelToken(Block.name));
+    model = module.get<mongoose.Model<Block>>(getModelToken(Block.name));
   });
 
   afterEach(async () => {

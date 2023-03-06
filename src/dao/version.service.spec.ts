@@ -2,11 +2,11 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { VersionService } from './version.service';
 import { getModelToken } from '@nestjs/mongoose';
 import { Version, VersionSchema } from '../schemas/version.schema';
-import mongoose, { Model } from 'mongoose';
+import * as mongoose from 'mongoose';
 
 describe('VersionService', () => {
   let service: VersionService;
-  let model: Model<Version>;
+  let model: mongoose.Model<Version>;
 
   beforeAll(async () => {
     await mongoose.connect(global.__MONGO_URI__);
@@ -28,7 +28,7 @@ describe('VersionService', () => {
     }).compile();
 
     service = module.get<VersionService>(VersionService);
-    model = module.get<Model<Version>>(getModelToken(Version.name));
+    model = module.get<mongoose.Model<Version>>(getModelToken(Version.name));
   });
 
   afterEach(async () => {

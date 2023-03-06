@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import mongoose, { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { Block, BlockDocument } from '../schemas/block.schema';
 
 @Injectable()
@@ -10,7 +10,7 @@ export class BlockService {
     private readonly blockModel: Model<BlockDocument>,
   ) {}
 
-  async findOneById(id: mongoose.Types.ObjectId): Promise<Block> {
+  async findOneById(id: Types.ObjectId): Promise<Block> {
     return this.blockModel.findById(id).exec();
   }
 
@@ -18,14 +18,11 @@ export class BlockService {
     return this.blockModel.create(block);
   }
 
-  async updateOneById(
-    id: mongoose.Types.ObjectId,
-    partialBlock: Partial<Block>,
-  ) {
+  async updateOneById(id: Types.ObjectId, partialBlock: Partial<Block>) {
     return this.blockModel.updateOne({ _id: id }, partialBlock).exec();
   }
 
-  async deleteOneById(id: mongoose.Types.ObjectId) {
+  async deleteOneById(id: Types.ObjectId) {
     return this.blockModel.deleteOne({ _id: id }).exec();
   }
 }

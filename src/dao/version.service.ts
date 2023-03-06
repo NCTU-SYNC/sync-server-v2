@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import mongoose, { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { Version, VersionDocument } from '../schemas/version.schema';
 
 @Injectable()
@@ -10,9 +10,7 @@ export class VersionService {
     private readonly contentModel: Model<VersionDocument>,
   ) {}
 
-  async findOneByArticleId(
-    articleId: mongoose.Types.ObjectId,
-  ): Promise<Version> {
+  async findOneByArticleId(articleId: Types.ObjectId): Promise<Version> {
     return this.contentModel.findOne({ articleId: articleId }).exec();
   }
 
@@ -20,14 +18,11 @@ export class VersionService {
     return this.contentModel.create(content);
   }
 
-  async updateOneById(
-    id: mongoose.Types.ObjectId,
-    partialVersion: Partial<Version>,
-  ) {
+  async updateOneById(id: Types.ObjectId, partialVersion: Partial<Version>) {
     return this.contentModel.updateOne({ _id: id }, partialVersion).exec();
   }
 
-  async deleteOneById(id: mongoose.Types.ObjectId) {
+  async deleteOneById(id: Types.ObjectId) {
     return this.contentModel.deleteOne({ _id: id }).exec();
   }
 }

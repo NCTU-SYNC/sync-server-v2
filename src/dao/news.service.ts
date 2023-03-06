@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import mongoose, { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { News, NewsDocument } from '../schemas/news.schema';
 
 @Injectable()
@@ -10,7 +10,7 @@ export class NewsService {
     private readonly newsModel: Model<NewsDocument>,
   ) {}
 
-  async findOneById(id: mongoose.Types.ObjectId): Promise<News> {
+  async findOneById(id: Types.ObjectId): Promise<News> {
     return this.newsModel.findById(id).exec();
   }
 
@@ -18,11 +18,11 @@ export class NewsService {
     return this.newsModel.create(news);
   }
 
-  async updateOneById(id: mongoose.Types.ObjectId, partialNews: Partial<News>) {
+  async updateOneById(id: Types.ObjectId, partialNews: Partial<News>) {
     return this.newsModel.updateOne({ _id: id }, partialNews).exec();
   }
 
-  async deleteOneById(id: mongoose.Types.ObjectId) {
+  async deleteOneById(id: Types.ObjectId) {
     return this.newsModel.deleteOne({ _id: id }).exec();
   }
 }

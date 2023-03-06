@@ -2,11 +2,11 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { ContentService } from './content.service';
 import { getModelToken } from '@nestjs/mongoose';
 import { Content, ContentSchema } from '../schemas/content.schema';
-import mongoose, { Model } from 'mongoose';
+import * as mongoose from 'mongoose';
 
 describe('ContentService', () => {
   let service: ContentService;
-  let model: Model<Content>;
+  let model: mongoose.Model<Content>;
 
   beforeAll(async () => {
     await mongoose.connect(global.__MONGO_URI__);
@@ -28,7 +28,7 @@ describe('ContentService', () => {
     }).compile();
 
     service = module.get<ContentService>(ContentService);
-    model = module.get<Model<Content>>(getModelToken(Content.name));
+    model = module.get<mongoose.Model<Content>>(getModelToken(Content.name));
   });
 
   afterEach(async () => {

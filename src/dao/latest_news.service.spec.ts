@@ -2,11 +2,11 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { LatestNewsService } from './latest_news.service';
 import { getModelToken } from '@nestjs/mongoose';
 import { LatestNews, LatestNewsSchema } from '../schemas/latest_news.schema';
-import mongoose, { Model } from 'mongoose';
+import * as mongoose from 'mongoose';
 
 describe('LatestNewsService', () => {
   let service: LatestNewsService;
-  let model: Model<LatestNews>;
+  let model: mongoose.Model<LatestNews>;
 
   beforeAll(async () => {
     await mongoose.connect(global.__MONGO_URI__);
@@ -28,7 +28,9 @@ describe('LatestNewsService', () => {
     }).compile();
 
     service = module.get<LatestNewsService>(LatestNewsService);
-    model = module.get<Model<LatestNews>>(getModelToken(LatestNews.name));
+    model = module.get<mongoose.Model<LatestNews>>(
+      getModelToken(LatestNews.name),
+    );
   });
 
   afterEach(async () => {
