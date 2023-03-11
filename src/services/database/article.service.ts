@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, QueryOptions, Types } from 'mongoose';
-import { Article, ArticleDocument } from '../schemas/article.schema';
+import { Article, ArticleDocument } from '../../schemas/article.schema';
 
 @Injectable()
 export class ArticleService {

@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ContentService } from './content.service';
 import { getModelToken } from '@nestjs/mongoose';
-import { Content, ContentSchema } from '../schemas/content.schema';
+import { Content, ContentSchema } from '../../schemas/content.schema';
 import * as mongoose from 'mongoose';
 
 describe('ContentService', () => {

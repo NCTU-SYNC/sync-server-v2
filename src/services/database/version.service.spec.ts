@@ -1,12 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { LatestNewsService } from './latest_news.service';
+import { VersionService } from './version.service';
 import { getModelToken } from '@nestjs/mongoose';
-import { LatestNews, LatestNewsSchema } from '../schemas/latest_news.schema';
+import { Version, VersionSchema } from '../../schemas/version.schema';
 import * as mongoose from 'mongoose';
 
-describe('LatestNewsService', () => {
-  let service: LatestNewsService;
-  let model: mongoose.Model<LatestNews>;
+describe('VersionService', () => {
+  let service: VersionService;
+  let model: mongoose.Model<Version>;
 
   beforeAll(async () => {
     await mongoose.connect(global.__MONGO_URI__);
@@ -19,18 +19,16 @@ describe('LatestNewsService', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        LatestNewsService,
+        VersionService,
         {
-          provide: getModelToken(LatestNews.name),
-          useValue: mongoose.model(LatestNews.name, LatestNewsSchema),
+          provide: getModelToken(Version.name),
+          useValue: mongoose.model(Version.name, VersionSchema),
         },
       ],
     }).compile();
 
-    service = module.get<LatestNewsService>(LatestNewsService);
-    model = module.get<mongoose.Model<LatestNews>>(
-      getModelToken(LatestNews.name),
-    );
+    service = module.get<VersionService>(VersionService);
+    model = module.get<mongoose.Model<Version>>(getModelToken(Version.name));
   });
 
   afterEach(async () => {
@@ -43,52 +41,49 @@ describe('LatestNewsService', () => {
     expect(model).toBeDefined();
   });
 
-  describe('findOneById', () => {
-    it('should find one latest_news by id', async () => {
+  describe('findOneByArticleId', () => {
+    it('should find one version by article id', async () => {
       const targetId = new mongoose.Types.ObjectId(1);
 
-      const spyFindById = jest.spyOn(model, 'findById');
-      await service.findOneById(targetId);
+      const spyFindOne = jest.spyOn(model, 'findOne');
+      await service.findOneByArticleId(targetId);
 
-      expect(spyFindById).toHaveBeenCalledTimes(1);
-      expect(spyFindById).toHaveBeenCalledWith(targetId);
+      expect(spyFindOne).toHaveBeenCalledTimes(1);
+      expect(spyFindOne).toHaveBeenCalledWith({ articleId: targetId });
     });
   });
 
   describe('createOne', () => {
-    it('should create one latest_news', async () => {
-      const mockLatestNews: LatestNews = {
+    it('should create one version', async () => {
+      const mockVersion: Version = {
         articleId: new mongoose.Types.ObjectId(1),
       };
 
       const spyCreate = jest.spyOn(model, 'create');
-      await service.createOne(mockLatestNews);
+      await service.createOne(mockVersion);
 
       expect(spyCreate).toHaveBeenCalledTimes(1);
-      expect(spyCreate).toHaveBeenCalledWith(mockLatestNews);
+      expect(spyCreate).toHaveBeenCalledWith(mockVersion);
     });
   });
 
   describe('updateOneById', () => {
-    it('should update one latest_news', async () => {
+    it('should update one version', async () => {
       const targetId = new mongoose.Types.ObjectId(1);
-      const mockLatestNews: LatestNews = {
+      const mockVersion: Version = {
         articleId: new mongoose.Types.ObjectId(1),
       };
 
       const spyUpdateOne = jest.spyOn(model, 'updateOne');
-      await service.updateOneById(targetId, mockLatestNews);
+      await service.updateOneById(targetId, mockVersion);
 
       expect(spyUpdateOne).toHaveBeenCalledTimes(1);
-      expect(spyUpdateOne).toHaveBeenCalledWith(
-        { _id: targetId },
-        mockLatestNews,
-      );
+      expect(spyUpdateOne).toHaveBeenCalledWith({ _id: targetId }, mockVersion);
     });
   });
 
   describe('deleteOneById', () => {
-    it('should delete one latest_news', async () => {
+    it('should delete one version', async () => {
       const targetId = new mongoose.Types.ObjectId(1);
 
       const spyDeleteOne = jest.spyOn(model, 'deleteOne');

@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { NewsService } from './news.service';
 import { getModelToken } from '@nestjs/mongoose';
-import { News, NewsSchema } from '../schemas/news.schema';
+import { News, NewsSchema } from '../../schemas/news.schema';
 import * as mongoose from 'mongoose';
 
 describe('NewsService', () => {
