@@ -1,3 +1,4 @@
+import * as path from 'path';
 import { INestApplication, VersioningType } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
@@ -6,6 +7,7 @@ import {
   SwaggerCustomOptions,
   DocumentBuilder,
 } from '@nestjs/swagger';
+import * as admin from 'firebase-admin';
 import { AppModule } from './app.module';
 
 function setupSwagger(app: INestApplication) {
@@ -24,10 +26,25 @@ function setupSwagger(app: INestApplication) {
   SwaggerModule.setup('doc', app, document, customOptions);
 }
 
+async function setupFirebase(app: INestApplication) {
+  const configService = app.get(ConfigService);
+  const firebaseConfigFile = configService.get<string>('FIREBASE_CREDENTIALS');
+  const firebaseDbUrl = configService.get<string>('FIREBASE_DB_URL');
+
+  import(path.join(process.cwd(), 'config', firebaseConfigFile)).then(
+    (firebaseConfig) =>
+      admin.initializeApp({
+        credential: admin.credential.cert(firebaseConfig),
+        databaseURL: firebaseDbUrl,
+      }),
+  );
+}
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   setupSwagger(app);
+  await setupFirebase(app);
 
   const configService = app.get(ConfigService);
   const port = configService.get<number>('port', 3000);

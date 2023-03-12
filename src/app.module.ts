@@ -10,6 +10,7 @@ const ENV_CONFIG = () => ({
   imports: [
     ConfigModule.forRoot({
       load: [ENV_CONFIG],
+      envFilePath: ['config/firebase.env'],
     }),
   ],
   controllers: [],
