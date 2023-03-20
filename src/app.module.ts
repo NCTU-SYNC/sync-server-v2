@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { FirebaseModule } from './auth/firebase.module';
 
 const ENV_CONFIG = () => ({
@@ -13,7 +13,14 @@ const ENV_CONFIG = () => ({
       load: [ENV_CONFIG],
       envFilePath: ['config/firebase.env'],
     }),
-    FirebaseModule,
+    FirebaseModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (config: ConfigService) => ({
+        credentialFilePath: config.get<string>('FIREBASE_CREDENTIALS'),
+        databaseUri: config.get<string>('FIREBASE_DB_URL'),
+      }),
+    }),
   ],
   controllers: [],
   providers: [],

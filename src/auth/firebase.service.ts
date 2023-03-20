@@ -1,27 +1,28 @@
 import * as fs from 'fs';
-import { Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
+import { Injectable, Inject } from '@nestjs/common';
 import * as admin from 'firebase-admin';
+
+import { FirebaseOptions } from './interfaces';
+import { MODULE_OPTIONS_TOKEN } from './firebase.module-definition';
 
 @Injectable()
 export class FirebaseService {
   app: admin.app.App;
   db: admin.firestore.Firestore;
 
-  constructor(configService: ConfigService) {
-    const firebaseConfigFilePath = configService.get<string>(
-      'FIREBASE_CREDENTIALS',
-    );
+  constructor(
+    @Inject(MODULE_OPTIONS_TOKEN)
+    options: FirebaseOptions,
+  ) {
+    const { credentialFilePath, databaseUri } = options;
 
     const credentialConfig = JSON.parse(
-      fs.readFileSync(firebaseConfigFilePath, 'utf8'),
+      fs.readFileSync(credentialFilePath, 'utf8'),
     );
-
-    const firebaseDbUrl = configService.get<string>('FIREBASE_DB_URL');
 
     this.app = admin.initializeApp({
       credential: admin.credential.cert(credentialConfig),
-      databaseURL: firebaseDbUrl,
+      databaseURL: databaseUri,
     });
     this.db = this.app.firestore();
   }
