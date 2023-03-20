@@ -1,3 +1,4 @@
+import * as fs from 'fs';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import * as admin from 'firebase-admin';
@@ -12,15 +13,17 @@ export class FirebaseService {
       'FIREBASE_CREDENTIALS',
     );
 
+    const credentialConfig = JSON.parse(
+      fs.readFileSync(firebaseConfigFilePath, 'utf8'),
+    );
+
     const firebaseDbUrl = configService.get<string>('FIREBASE_DB_URL');
 
-    import(firebaseConfigFilePath).then((firebaseConfig) => {
-      this.app = admin.initializeApp({
-        credential: admin.credential.cert(firebaseConfig),
-        databaseURL: firebaseDbUrl,
-      });
-      this.db = this.app.firestore();
+    this.app = admin.initializeApp({
+      credential: admin.credential.cert(credentialConfig),
+      databaseURL: firebaseDbUrl,
     });
+    this.db = this.app.firestore();
   }
 
   async verifyIdToken(idToken: string) {
