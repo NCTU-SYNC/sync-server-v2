@@ -1,14 +1,16 @@
 import * as fs from 'fs';
 import { Injectable, Inject } from '@nestjs/common';
-import * as admin from 'firebase-admin';
+import { initializeApp, App, cert } from 'firebase-admin/app';
+import { getAuth } from 'firebase-admin/auth';
+import { Firestore, getFirestore, Timestamp } from 'firebase-admin/firestore';
 
 import { FirebaseOptions } from './interfaces';
 import { MODULE_OPTIONS_TOKEN } from './firebase.module-definition';
 
 @Injectable()
 export class FirebaseService {
-  app: admin.app.App;
-  db: admin.firestore.Firestore;
+  app: App;
+  db: Firestore;
 
   constructor(
     @Inject(MODULE_OPTIONS_TOKEN)
@@ -20,15 +22,15 @@ export class FirebaseService {
       fs.readFileSync(credentialFilePath, 'utf8'),
     );
 
-    this.app = admin.initializeApp({
-      credential: admin.credential.cert(credentialConfig),
+    this.app = initializeApp({
+      credential: cert(credentialConfig),
       databaseURL: databaseUri,
     });
-    this.db = this.app.firestore();
+    this.db = getFirestore(this.app);
   }
 
   async verifyIdToken(idToken: string) {
-    return this.app.auth().verifyIdToken(idToken);
+    return getAuth(this.app).verifyIdToken(idToken);
   }
 
   async getUserInfo(uid: string) {
@@ -54,7 +56,7 @@ export class FirebaseService {
     const subscribedList = doc.get('subscribed') ?? [];
     const element = {
       articleId,
-      timeStamp: admin.firestore.Timestamp.now(),
+      timeStamp: Timestamp.now(),
     };
 
     const newEditedList = this.upsertElementByArticleId(
@@ -94,7 +96,7 @@ export class FirebaseService {
     if (isSubscribe) {
       const element = {
         articleId,
-        timeStamp: admin.firestore.Timestamp.now(),
+        timeStamp: Timestamp.now(),
       };
       newSubscribedList = this.upsertElementByArticleId(
         articleId,
