@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { FirebaseModule } from './auth/firebase.module';
 
 const ENV_CONFIG = () => ({
   port: parseInt(process.env.PORT, 10) || 3000,
@@ -12,6 +13,7 @@ const ENV_CONFIG = () => ({
       load: [ENV_CONFIG],
       envFilePath: ['config/firebase.env'],
     }),
+    FirebaseModule,
   ],
   controllers: [],
   providers: [],
