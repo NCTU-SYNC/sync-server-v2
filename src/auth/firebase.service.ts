@@ -14,18 +14,18 @@ export class FirebaseService {
 
   constructor(
     @Inject(MODULE_OPTIONS_TOKEN)
-    options: FirebaseOptions,
+    options?: FirebaseOptions,
   ) {
-    const { credentialFilePath, databaseUri } = options;
+    const appOptions = options
+      ? {
+          credential: cert(
+            JSON.parse(fs.readFileSync(options.credentialFilePath, 'utf8')),
+          ),
+          databaseURL: options.databaseUri,
+        }
+      : {};
 
-    const credentialConfig = JSON.parse(
-      fs.readFileSync(credentialFilePath, 'utf8'),
-    );
-
-    this.app = initializeApp({
-      credential: cert(credentialConfig),
-      databaseURL: databaseUri,
-    });
+    this.app = initializeApp(appOptions);
     this.db = getFirestore(this.app);
   }
 
