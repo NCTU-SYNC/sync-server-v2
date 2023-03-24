@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { LatestNewsService } from './latest_news.service';
 import { getModelToken } from '@nestjs/mongoose';
-import { LatestNews, LatestNewsSchema } from '../../schemas/latest_news.schema';
+import { LatestNews, LatestNewsSchema } from './schemas/latest_news.schema';
 import * as mongoose from 'mongoose';
 
 describe('LatestNewsService', () => {

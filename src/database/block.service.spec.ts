@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { BlockService } from './block.service';
 import { getModelToken } from '@nestjs/mongoose';
-import { Block, BlockSchema } from '../../schemas/block.schema';
+import { Block, BlockSchema } from './schemas/block.schema';
 import * as mongoose from 'mongoose';
 
 describe('BlockService', () => {

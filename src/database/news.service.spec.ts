@@ -1,12 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { VersionService } from './version.service';
+import { NewsService } from './news.service';
 import { getModelToken } from '@nestjs/mongoose';
-import { Version, VersionSchema } from '../../schemas/version.schema';
+import { News, NewsSchema } from './schemas/news.schema';
 import * as mongoose from 'mongoose';
 
-describe('VersionService', () => {
-  let service: VersionService;
-  let model: mongoose.Model<Version>;
+describe('NewsService', () => {
+  let service: NewsService;
+  let model: mongoose.Model<News>;
 
   beforeAll(async () => {
     await mongoose.connect(global.__MONGO_URI__);
@@ -19,16 +19,16 @@ describe('VersionService', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        VersionService,
+        NewsService,
         {
-          provide: getModelToken(Version.name),
-          useValue: mongoose.model(Version.name, VersionSchema),
+          provide: getModelToken(News.name),
+          useValue: mongoose.model(News.name, NewsSchema),
         },
       ],
     }).compile();
 
-    service = module.get<VersionService>(VersionService);
-    model = module.get<mongoose.Model<Version>>(getModelToken(Version.name));
+    service = module.get<NewsService>(NewsService);
+    model = module.get<mongoose.Model<News>>(getModelToken(News.name));
   });
 
   afterEach(async () => {
@@ -41,49 +41,51 @@ describe('VersionService', () => {
     expect(model).toBeDefined();
   });
 
-  describe('findOneByArticleId', () => {
-    it('should find one version by article id', async () => {
+  describe('findOneById', () => {
+    it('should find one news by id', async () => {
       const targetId = new mongoose.Types.ObjectId(1);
 
-      const spyFindOne = jest.spyOn(model, 'findOne');
-      await service.findOneByArticleId(targetId);
+      const spyFindById = jest.spyOn(model, 'findById');
+      await service.findOneById(targetId);
 
-      expect(spyFindOne).toHaveBeenCalledTimes(1);
-      expect(spyFindOne).toHaveBeenCalledWith({ articleId: targetId });
+      expect(spyFindById).toHaveBeenCalledTimes(1);
+      expect(spyFindById).toHaveBeenCalledWith(targetId);
     });
   });
 
   describe('createOne', () => {
-    it('should create one version', async () => {
-      const mockVersion: Version = {
-        articleId: new mongoose.Types.ObjectId(1),
+    it('should create one news', async () => {
+      const mockNews: News = {
+        newsId: new mongoose.Types.ObjectId(1),
+        title: 'test',
       };
 
       const spyCreate = jest.spyOn(model, 'create');
-      await service.createOne(mockVersion);
+      await service.createOne(mockNews);
 
       expect(spyCreate).toHaveBeenCalledTimes(1);
-      expect(spyCreate).toHaveBeenCalledWith(mockVersion);
+      expect(spyCreate).toHaveBeenCalledWith(mockNews);
     });
   });
 
   describe('updateOneById', () => {
-    it('should update one version', async () => {
+    it('should update one news', async () => {
       const targetId = new mongoose.Types.ObjectId(1);
-      const mockVersion: Version = {
-        articleId: new mongoose.Types.ObjectId(1),
+      const mockNews: News = {
+        newsId: new mongoose.Types.ObjectId(1),
+        title: 'test',
       };
 
       const spyUpdateOne = jest.spyOn(model, 'updateOne');
-      await service.updateOneById(targetId, mockVersion);
+      await service.updateOneById(targetId, mockNews);
 
       expect(spyUpdateOne).toHaveBeenCalledTimes(1);
-      expect(spyUpdateOne).toHaveBeenCalledWith({ _id: targetId }, mockVersion);
+      expect(spyUpdateOne).toHaveBeenCalledWith({ _id: targetId }, mockNews);
     });
   });
 
   describe('deleteOneById', () => {
-    it('should delete one version', async () => {
+    it('should delete one news', async () => {
       const targetId = new mongoose.Types.ObjectId(1);
 
       const spyDeleteOne = jest.spyOn(model, 'deleteOne');
