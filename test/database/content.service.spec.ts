@@ -1,12 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { BlockService } from './block.service';
+import { ContentService } from '../../src/database/content.service';
 import { getModelToken } from '@nestjs/mongoose';
-import { Block, BlockSchema } from './schemas/block.schema';
+import {
+  Content,
+  ContentSchema,
+} from '../../src/database/schemas/content.schema';
 import * as mongoose from 'mongoose';
 
-describe('BlockService', () => {
-  let service: BlockService;
-  let model: mongoose.Model<Block>;
+describe('ContentService', () => {
+  let service: ContentService;
+  let model: mongoose.Model<Content>;
 
   beforeAll(async () => {
     await mongoose.connect(global.__MONGO_URI__);
@@ -19,16 +22,16 @@ describe('BlockService', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        BlockService,
+        ContentService,
         {
-          provide: getModelToken(Block.name),
-          useValue: mongoose.model(Block.name, BlockSchema),
+          provide: getModelToken(Content.name),
+          useValue: mongoose.model(Content.name, ContentSchema),
         },
       ],
     }).compile();
 
-    service = module.get<BlockService>(BlockService);
-    model = module.get<mongoose.Model<Block>>(getModelToken(Block.name));
+    service = module.get<ContentService>(ContentService);
+    model = module.get<mongoose.Model<Content>>(getModelToken(Content.name));
   });
 
   afterEach(async () => {
@@ -42,7 +45,7 @@ describe('BlockService', () => {
   });
 
   describe('findOneById', () => {
-    it('should find one block by id', async () => {
+    it('should find one content by id', async () => {
       const targetId = new mongoose.Types.ObjectId(1);
 
       const spyFindById = jest.spyOn(model, 'findById');
@@ -54,40 +57,38 @@ describe('BlockService', () => {
   });
 
   describe('createOne', () => {
-    it('should create one block', async () => {
-      const mockBlock: Block = {
+    it('should create one content', async () => {
+      const mockContent: Content = {
         blockId: new mongoose.Types.ObjectId(1),
         articleId: new mongoose.Types.ObjectId(1),
-        authors: [],
       };
 
       const spyCreate = jest.spyOn(model, 'create');
-      await service.createOne(mockBlock);
+      await service.createOne(mockContent);
 
       expect(spyCreate).toHaveBeenCalledTimes(1);
-      expect(spyCreate).toHaveBeenCalledWith(mockBlock);
+      expect(spyCreate).toHaveBeenCalledWith(mockContent);
     });
   });
 
   describe('updateOneById', () => {
-    it('should update one block', async () => {
+    it('should update one content', async () => {
       const targetId = new mongoose.Types.ObjectId(1);
-      const mockBlock: Block = {
+      const mockContent: Content = {
         blockId: new mongoose.Types.ObjectId(1),
         articleId: new mongoose.Types.ObjectId(1),
-        authors: [],
       };
 
       const spyUpdateOne = jest.spyOn(model, 'updateOne');
-      await service.updateOneById(targetId, mockBlock);
+      await service.updateOneById(targetId, mockContent);
 
       expect(spyUpdateOne).toHaveBeenCalledTimes(1);
-      expect(spyUpdateOne).toHaveBeenCalledWith({ _id: targetId }, mockBlock);
+      expect(spyUpdateOne).toHaveBeenCalledWith({ _id: targetId }, mockContent);
     });
   });
 
   describe('deleteOneById', () => {
-    it('should delete one block', async () => {
+    it('should delete one content', async () => {
       const targetId = new mongoose.Types.ObjectId(1);
 
       const spyDeleteOne = jest.spyOn(model, 'deleteOne');
