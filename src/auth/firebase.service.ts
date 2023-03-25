@@ -70,15 +70,11 @@ export class FirebaseService {
       element,
     );
 
-    userRef.set(
-      { edited: newEditedList, subscribed: newSubscribedList },
-      { merge: true },
-    );
+    const newLists = { edited: newEditedList, subscribed: newSubscribedList };
 
-    return Promise.resolve({
-      edited: newEditedList,
-      subscribed: newSubscribedList,
-    });
+    userRef.set(newLists, { merge: true });
+
+    return Promise.resolve(newLists);
   }
 
   async updateArticleSubscription(
