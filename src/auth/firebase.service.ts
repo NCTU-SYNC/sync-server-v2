@@ -74,7 +74,7 @@ export class FirebaseService {
 
     userRef.set(newLists, { merge: true });
 
-    return Promise.resolve(newLists);
+    return newLists;
   }
 
   async updateArticleSubscription(
@@ -107,7 +107,7 @@ export class FirebaseService {
 
     userRef.set({ subscribed: newSubscribedList }, { merge: true });
 
-    return Promise.resolve(newSubscribedList);
+    return newSubscribedList;
   }
 
   async accumulateUserPoints(uid: string, point: number) {
@@ -118,7 +118,7 @@ export class FirebaseService {
     const newPoint = origPoint + point;
     userRef.set({ point: newPoint }, { merge: true });
 
-    return Promise.resolve(newPoint);
+    return newPoint;
   }
 
   async getUserPoints(uid: string) {
@@ -127,7 +127,7 @@ export class FirebaseService {
 
     const point: number = doc.get('points') ?? 0;
 
-    return Promise.resolve(point);
+    return point;
   }
 
   async updateNotification(uid: string, notifications: any[], maxRemain = 20) {
@@ -139,7 +139,7 @@ export class FirebaseService {
 
     notiRef.set({ notifications: newNotiList }, { merge: true });
 
-    return Promise.resolve(newNotiList);
+    return newNotiList;
   }
 
   async getNotifications(uid: string) {
@@ -147,6 +147,6 @@ export class FirebaseService {
     const doc = await notiRef.get();
     const notiList = doc.get('notifications') ?? [];
 
-    return Promise.resolve(notiList);
+    return notiList;
   }
 }
