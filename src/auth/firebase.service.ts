@@ -7,6 +7,8 @@ import { Firestore, getFirestore, Timestamp } from 'firebase-admin/firestore';
 import { FirebaseOptions, Notification } from './interfaces';
 import { MODULE_OPTIONS_TOKEN } from './firebase.module-definition';
 
+const DEFAULT_MAX_REMAIN = 20;
+
 @Injectable()
 export class FirebaseService {
   app: App;
@@ -133,7 +135,7 @@ export class FirebaseService {
   async updateNotification(
     uid: string,
     notifications: Notification[],
-    maxRemain = 20,
+    maxRemain = DEFAULT_MAX_REMAIN,
   ) {
     const notiRef = this.db.collection('notifications').doc(uid);
     const doc = await notiRef.get();
