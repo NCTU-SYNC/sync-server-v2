@@ -74,7 +74,7 @@ export class FirebaseService {
 
     const newLists = { edited: newEditedList, subscribed: newSubscribedList };
 
-    userRef.set(newLists, { merge: true });
+    await userRef.set(newLists, { merge: true });
 
     return newLists;
   }
@@ -107,7 +107,7 @@ export class FirebaseService {
       );
     }
 
-    userRef.set({ subscribed: newSubscribedList }, { merge: true });
+    await userRef.set({ subscribed: newSubscribedList }, { merge: true });
 
     return newSubscribedList;
   }
@@ -118,7 +118,7 @@ export class FirebaseService {
 
     const origPoint: number = doc.get('points') ?? 0;
     const newPoint = origPoint + point;
-    userRef.set({ point: newPoint }, { merge: true });
+    await userRef.set({ point: newPoint }, { merge: true });
 
     return newPoint;
   }
@@ -143,7 +143,7 @@ export class FirebaseService {
 
     const newNotiList = [...notiList, ...notifications].slice(-maxRemain);
 
-    notiRef.set({ notifications: newNotiList }, { merge: true });
+    await notiRef.set({ notifications: newNotiList }, { merge: true });
 
     return newNotiList;
   }
