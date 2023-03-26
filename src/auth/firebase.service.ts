@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import { Injectable, Inject } from '@nestjs/common';
-import { initializeApp, App, cert } from 'firebase-admin/app';
+import { initializeApp, App, cert, AppOptions } from 'firebase-admin/app';
 import { getAuth } from 'firebase-admin/auth';
 import { Firestore, getFirestore, Timestamp } from 'firebase-admin/firestore';
 
@@ -18,14 +18,22 @@ export class FirebaseService {
     @Inject(MODULE_OPTIONS_TOKEN)
     options?: FirebaseOptions,
   ) {
-    const appOptions = options
-      ? {
+    let appOptions: AppOptions = {};
+
+    if (options) {
+      try {
+        appOptions = {
           credential: cert(
             JSON.parse(fs.readFileSync(options.credentialFilePath, 'utf8')),
           ),
           databaseURL: options.databaseUri,
-        }
-      : {};
+        };
+      } catch (error) {
+        console.warn(
+          `Call \`initializeApp\` without options. Meet error when initialize firebase: ${error}.`,
+        );
+      }
+    }
 
     this.app = initializeApp(appOptions);
     this.db = getFirestore(this.app);
