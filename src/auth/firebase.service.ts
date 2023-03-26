@@ -4,7 +4,7 @@ import { initializeApp, App, cert } from 'firebase-admin/app';
 import { getAuth } from 'firebase-admin/auth';
 import { Firestore, getFirestore, Timestamp } from 'firebase-admin/firestore';
 
-import { FirebaseOptions } from './interfaces';
+import { FirebaseOptions, Notification } from './interfaces';
 import { MODULE_OPTIONS_TOKEN } from './firebase.module-definition';
 
 @Injectable()
@@ -130,7 +130,11 @@ export class FirebaseService {
     return point;
   }
 
-  async updateNotification(uid: string, notifications: any[], maxRemain = 20) {
+  async updateNotification(
+    uid: string,
+    notifications: Notification[],
+    maxRemain = 20,
+  ) {
     const notiRef = this.db.collection('notifications').doc(uid);
     const doc = await notiRef.get();
     const notiList = doc.get('notifications') ?? [];
