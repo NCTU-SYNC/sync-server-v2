@@ -1,5 +1,5 @@
 import * as fs from 'fs';
-import { Injectable, Inject } from '@nestjs/common';
+import { Logger, Injectable, Inject } from '@nestjs/common';
 import { initializeApp, App, cert, AppOptions } from 'firebase-admin/app';
 import { getAuth } from 'firebase-admin/auth';
 import { Firestore, getFirestore, Timestamp } from 'firebase-admin/firestore';
@@ -11,6 +11,7 @@ const DEFAULT_MAX_REMAIN = 20;
 
 @Injectable()
 export class FirebaseService {
+  private readonly logger = new Logger(FirebaseService.name);
   app: App;
   db: Firestore;
 
@@ -29,7 +30,7 @@ export class FirebaseService {
           databaseURL: options.databaseUri,
         };
       } catch (error) {
-        console.warn(
+        this.logger.warn(
           `Call \`initializeApp\` without options. Meet error when initialize firebase: ${error}.`,
         );
       }
