@@ -1,9 +1,19 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { INestApplication } from '@nestjs/common';
+import { INestApplication, Module } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { AppModule } from './../src/app.module';
 import * as path from 'path';
 import * as fs from 'fs';
+
+@Module({})
+class FakeMongooseModule {}
+
+jest.mock('@nestjs/mongoose', () => ({
+  MongooseModule: {
+    forRootAsync: jest.fn(() => FakeMongooseModule),
+  },
+}));
+
+import { AppModule } from './../src/app.module';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
