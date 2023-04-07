@@ -1,8 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, Module } from '@nestjs/common';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import * as path from 'path';
-import * as fs from 'fs';
 
 @Module({})
 class FakeMongooseModule {}
@@ -29,17 +26,5 @@ describe('AppController (e2e)', () => {
 
   afterAll(async () => {
     await app.close();
-  });
-
-  it('should generate swagger spec', async () => {
-    const config = new DocumentBuilder()
-      .setTitle('SYNC API')
-      .setDescription('The SYNC API spec')
-      .setVersion('2.0')
-      .build();
-
-    const document = SwaggerModule.createDocument(app, config);
-    const outputPath = path.resolve(process.cwd(), 'swagger.json');
-    fs.writeFileSync(outputPath, JSON.stringify(document));
   });
 });
