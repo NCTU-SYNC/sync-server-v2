@@ -1,8 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, Module } from '@nestjs/common';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import * as path from 'path';
-import * as fs from 'fs';
+import * as request from 'supertest';
 
 @Module({})
 class FakeMongooseModule {}
@@ -14,6 +12,12 @@ jest.mock('@nestjs/mongoose', () => ({
 }));
 
 import { AppModule } from './../src/app.module';
+
+interface ResponseBody {
+  statusCode: number;
+  message: string;
+  error?: string;
+}
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
@@ -31,15 +35,16 @@ describe('AppController (e2e)', () => {
     await app.close();
   });
 
-  it('should generate swagger spec', async () => {
-    const config = new DocumentBuilder()
-      .setTitle('SYNC API')
-      .setDescription('The SYNC API spec')
-      .setVersion('2.0')
-      .build();
+  it('/ (GET)', () => {
+    const expecedBody: ResponseBody = {
+      statusCode: 404,
+      message: 'Cannot GET /',
+      error: 'Not Found',
+    };
 
-    const document = SwaggerModule.createDocument(app, config);
-    const outputPath = path.resolve(process.cwd(), 'swagger.json');
-    fs.writeFileSync(outputPath, JSON.stringify(document));
+    return request(app.getHttpServer())
+      .get('/')
+      .expect(404)
+      .expect(expecedBody);
   });
 });
