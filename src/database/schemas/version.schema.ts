@@ -43,8 +43,8 @@ class Versions {
   @Prop({ type: [BlockSchema], default: [] })
   blocks?: Block[];
 
-  @Prop({ required: true, type: [AuthorSchema] })
-  authors: Author[];
+  @Prop({ required: true, type: AuthorSchema })
+  author: Author;
 
   @Prop({ type: [raw({ title: String, url: String })], default: [] })
   citations?: Record<string, any>[];
