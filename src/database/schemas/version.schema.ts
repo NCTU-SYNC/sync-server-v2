@@ -56,7 +56,7 @@ class Versions {
     type: raw({ added: Number, urdeletedl: Number }),
     default: { added: 0, urdeletedl: 0 },
   })
-  wordsChanged: Record<string, any>;
+  wordsChanged?: Record<string, any>;
 }
 
 const VersionsSchema = SchemaFactory.createForClass(Versions);
@@ -66,7 +66,7 @@ export class Version {
   @Prop({ required: true, type: mongoose.Schema.Types.ObjectId })
   articleId: mongoose.Types.ObjectId;
 
-  @Prop({ rtype: [VersionsSchema] })
+  @Prop({ type: [VersionsSchema] })
   versions?: Versions[];
 }
 
