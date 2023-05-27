@@ -17,8 +17,19 @@ export class ArticleService {
     return this.articleModel.find(filter ?? {}, null, options).exec();
   }
 
-  async findOneById(id: Types.ObjectId): Promise<Article> {
-    return this.articleModel.findById(id).exec();
+  async findOneById(
+    id: Types.ObjectId,
+    views = false,
+  ): Promise<ArticleDocument> {
+    const query = views
+      ? this.articleModel.findByIdAndUpdate(
+          id,
+          { $inc: { viewsCount: 1 } },
+          { new: true, upsert: true },
+        )
+      : this.articleModel.findById(id);
+
+    return query.exec();
   }
 
   async createOne(article: Article): Promise<Article> {
