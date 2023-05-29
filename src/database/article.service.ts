@@ -32,7 +32,9 @@ export class ArticleService {
     return query.exec();
   }
 
-  async createOne(article: Article): Promise<Article> {
+  async createOne(
+    article: Article & { _id?: Types.ObjectId },
+  ): Promise<ArticleDocument> {
     return this.articleModel.create(article);
   }
 

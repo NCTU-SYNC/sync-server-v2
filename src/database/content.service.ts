@@ -14,7 +14,9 @@ export class ContentService {
     return this.contentModel.findById(id).exec();
   }
 
-  async createOne(content: Content): Promise<Content> {
+  async createOne(
+    content: Content & { _id?: Types.ObjectId },
+  ): Promise<ContentDocument> {
     return this.contentModel.create(content);
   }
 

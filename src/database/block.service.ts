@@ -10,6 +10,10 @@ export class BlockService {
     private readonly blockModel: Model<BlockDocument>,
   ) {}
 
+  async findOneByBlockId(id: Types.ObjectId): Promise<Block> {
+    return this.blockModel.findOne({ blockId: id }).exec();
+  }
+
   async findOneById(id: Types.ObjectId): Promise<Block> {
     return this.blockModel.findById(id).exec();
   }
