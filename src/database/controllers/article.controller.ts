@@ -1,11 +1,11 @@
 import { Controller, Get, Param, Post, Body, Put, Delete, Query } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags, ApiQuery } from '@nestjs/swagger'; // Import decorators
+import { ApiOperation, ApiResponse, ApiTags, ApiQuery } from '@nestjs/swagger';
 import { ArticleService } from '../article.service';
 import { Article } from '../schemas/article.schema';
 import { Types } from 'mongoose';
 
 
-@ApiTags('Article') // Tag for grouping endpoints in Swagger
+@ApiTags('Article')
 @Controller('article')
 export class ArticleController {
   constructor(private readonly articleService: ArticleService) {}
@@ -23,29 +23,25 @@ export class ArticleController {
     @Query('tag') tag?: string,
     @Query('category') category?: string,
   ): Promise<Article[]> {
-      // console.log('keyword:', keyword);
-      const filter = {};
-      if (keyword) {
-        //filter for keyword
-        filter['keyword'] = keyword;
-      } else if (tag) {
-        //filter for hashtag
-        filter['tag'] = tag;
-      } else if (category) {
-        //filter for category
-        filter['category'] = category;
-      }
- 
-      const articles = await this.articleService.findAll(filter, { limit });
-      return articles;
+    const query = {};
+    if (keyword) {
+      query['$or'] = [
+        { title: { $regex: keyword, $options: 'i' } },
+        { outline: { $regex: keyword, $options: 'i' } }
+      ];
     }
+    if (tag) {
+      query['tags'] = tag 
+    } 
+    if (category) {
+      query['category'] = category
+    }
+    const options = {limit: limit};  
+    return this.articleService.findAll(query, options);
+  }
 
   @Get(':id')
   async findOneByID(@Param('id') id: string): Promise<Article> {
     return this.articleService.findOneById(new Types.ObjectId(id));
-  }
-  @Get(':id/authors')
-  async findAuthorsByArticleId(@Param('id') id: string) {
-    return this.articleService.findAuthorsByArticleId(id);
   }
 }
