@@ -2,9 +2,8 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { FirebaseModule } from './auth/firebase.module';
 import { MongooseModule } from '@nestjs/mongoose';
-import { ArticleController } from './database/controllers/article.controller';
-import { ArticleService } from './database/article.service'; 
-import { Article, ArticleSchema } from './database/schemas/article.schema'; 
+import { ArticleModule } from './database/modules/article.module';
+
 const ENV_CONFIG = () => ({
   port: parseInt(process.env.PORT, 10) || 3000,
   baseUrl: '/api',
@@ -32,9 +31,9 @@ const ENV_CONFIG = () => ({
         uri: config.get<string>('MONGODB_URI'),
       }),
     }),
-    MongooseModule.forFeature([{ name: Article.name, schema: ArticleSchema }]),
+    ArticleModule,
   ],
-  controllers: [ArticleController],
-  providers: [ArticleService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
