@@ -41,7 +41,7 @@ export class ArticleController {
   }
 
   @Get(':id')
-  async findOneByID(@Param('id') id: string): Promise<Article> {
+  async findOneById(@Param('id') id: string): Promise<Article> {
     return this.articleService.findOneById(new Types.ObjectId(id));
   }
 }
