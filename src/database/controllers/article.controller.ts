@@ -1,5 +1,5 @@
 import { Controller, Get, Param, Post, Body, Put, Delete, Query } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags, ApiQuery } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags, ApiQuery, ApiParam } from '@nestjs/swagger';
 import { ArticleService } from '../article.service';
 import { Article } from '../schemas/article.schema';
 import { Types } from 'mongoose';
@@ -11,8 +11,7 @@ export class ArticleController {
   constructor(private readonly articleService: ArticleService) {}
 
   @Get()
-  @ApiOperation({ summary: 'Find all articles', description: 'Get a list of all articles' })
-  @ApiResponse({ status: 200, description: 'List of articles returned successfully', type: Article, isArray: true })
+  @ApiOperation({ summary: 'Find articles', description: 'Get a list of articles based on optional filtering criteria.', })
   @ApiQuery({ name: 'q', required: false, description: 'Keyword to search in article title or tags' })
   @ApiQuery({ name: 'limit', required: false, description: 'Maximum number of articles to return' })
   @ApiQuery({ name: 'tag', required: false, description: 'Hashtag to filter articles' })
@@ -41,7 +40,17 @@ export class ArticleController {
   }
 
   @Get(':id')
-  async findOneById(@Param('id') id: string): Promise<Article> {
+  @ApiOperation({ summary: 'Find article by ID', description: 'Get an article by its unique identifier (ID)' })
+  @ApiParam({ name: 'id', required: true, type: 'string', description: 'Article ID', example: '628b27fe0da55d692cd16eda' })
+  async findOneByID(@Param('id') id: Types.ObjectId): Promise<Article> {
     return this.articleService.findOneById(new Types.ObjectId(id));
+  }
+
+  @Get(':id/authors')
+  @ApiOperation({ summary: 'Find authors of an article', description: 'Get the authors of a specific article' })
+  @ApiParam({ name: 'id', required: true, type: 'string', description: 'Article ID', example: '628b27fe0da55d692cd16eda' })
+  async findAuthorsByID(@Param('id') id: Types.ObjectId): Promise<Article['authors']> {
+    const article =  await this.articleService.findOneById(new Types.ObjectId(id));
+    return article.authors;
   }
 }
