@@ -27,7 +27,6 @@ export class VersionController {
         }
 
         const comparison = articleVersions.versions.slice(base - 1, compare);
-        console.log(comparison)
 
         return { comparison };
     } 
