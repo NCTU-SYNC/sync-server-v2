@@ -13,30 +13,18 @@ export class VersionController {
     return this.versionService.findOneByArticleId(new Types.ObjectId(id));
     }
 
-    @Get(':id/compare')
-    // @ApiOperation({
-    //   summary: 'Compare versions of an article',
-    //   description: 'Get a comparison of article versions based on version indexes',
-    // })
-    // @ApiParam({ name: 'id', description: 'Article ID' })
-    // @ApiQuery({ name: 'start', required: true, description: 'Start version index' })
-    // @ApiQuery({ name: 'end', required: true, description: 'End version index' })
-    async compareVersions(
+    @Get('compare/:id')
+    async getArticlesComparisonByVersionIndexes(
         @Param('id') id: Types.ObjectId,
         @Query('base') base: number,
         @Query('compare') compare: number,
     ): Promise<{ comparison: any[] }> {
         const articleVersions: Version = await this.versionService.findOneByArticleId(id);
 
-        // if (base < 0 || compare < 0 || base >= articleVersions.versions.length || compare >= articleVersions.versions.length || base > compare) {
-        //   throw new Error('Invalid start or end version indexes');
-        // }
-
         if (!base && !compare) {
             compare = articleVersions.versions.length;
             base = compare - 1;
         }
-        console.log("base:", base, "compare:", compare);
 
         const comparison = articleVersions.versions.slice(base - 1, compare);
         console.log(comparison)
