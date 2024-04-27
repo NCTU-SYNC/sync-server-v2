@@ -1,37 +1,41 @@
-// interface Message {
-//   ruleId: string;
-//   severity: number;
-//   message: string;
-//   line: number;
-//   column: number;
-//   nodeType: string;
-// }
+const path = require('path');
 
-// interface LintResult {
-//   filePath: string;
-//   messages: Message[];
-//   errorCount: number;
-//   warningCount: number;
-//   fixableErrorCount: number;
-//   fixableWarningCount: number;
-//   source?: string;
-// }
-
-let severityMap = new Map([
+const severityMap = new Map([
   [1, 'warning'],
   [2, 'error'],
 ]);
 
-module.exports = function (results) {
-  let result_str = '';
+function constructMessage(type, file, line, col, title, message) {
+  return `::${type} file=${file},line=${line},col=${col},title=${title}::${message}`;
+}
 
-  for (let result of results) {
+module.exports = function (results) {
+  const messages = [];
+
+  for (const result of results) {
+    const relatedPath = path.relative(process.cwd(), result.filePath);
+
     if (result.messages.length > 0) {
-      for (let msg of result.messages) {
-        const { ruleId, severity, message, line, column } = msg;
-        result_str += `::${severityMap.get(severity)} file=${result.filePath},line=${line},col=${column},title=${ruleId}::${message}`;
+      for (const {
+        ruleId,
+        severity,
+        message,
+        line,
+        column,
+      } of result.messages) {
+        const messageType = severityMap.get(severity);
+        const constructedMessage = constructMessage(
+          messageType,
+          relatedPath,
+          line,
+          column,
+          ruleId,
+          message,
+        );
+        messages.push(constructedMessage + '\n');
       }
     }
   }
-  return result_str;
+
+  return messages.join('');
 };
