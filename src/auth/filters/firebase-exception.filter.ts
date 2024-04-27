@@ -22,6 +22,8 @@ export class FirebaseExceptionFilter implements ExceptionFilter {
     });
   }
 
+
+  
   private getStatus(code: string) {
     // TODO: Provide a more detailed status code.
     return HttpStatus.INTERNAL_SERVER_ERROR;

@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  build:
+  lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -22,6 +22,7 @@ jobs:
       - name: Format
         run: |
           yarn format:check | \
-            xargs -I {} echo "::error file={}::Format needed, run 'yarn format' to fix it"
+            xargs -I {} echo "::error file={}::Format needed, run 'yarn format' to fix it" | \
+            [[ $(wc -c) -eq 0 ]]
       - name: Lint
-        run: yarn lint:check | echo
+        run: yarn lint:check | [[ $(wc -c) -eq 0 ]]
