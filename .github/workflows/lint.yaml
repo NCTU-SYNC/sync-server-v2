@@ -12,17 +12,16 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set Node.js 20.x
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 20.x
       - name: Install dependencies
         run: yarn install
-      - name: Format
-        run: |
-          yarn format:check | \
-            xargs -I {} echo "::error file={}::Format needed, run 'yarn format' to fix it" | \
-            [[ $(wc -c) -eq 0 ]]
       - name: Lint
-        run: yarn lint:check | [[ $(wc -c) -eq 0 ]]
+        run: |
+          yarn run eslint \
+            --max-warnings 0 \
+            --format .github/actions/eslint-formatter-github-action.js
+            "{src,test}"

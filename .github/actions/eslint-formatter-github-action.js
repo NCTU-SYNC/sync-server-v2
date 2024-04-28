@@ -1,4 +1,4 @@
-const path = require('path');
+import path from 'path';
 
 const severityMap = new Map([
   [1, 'warning'],
@@ -9,7 +9,7 @@ function constructMessage(type, file, line, col, title, message) {
   return `::${type} file=${file},line=${line},col=${col},title=${title}::${message}`;
 }
 
-module.exports = function (results) {
+export default function (results) {
   const messages = [];
 
   for (const result of results) {
