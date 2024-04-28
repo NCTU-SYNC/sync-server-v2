@@ -11,7 +11,7 @@ export default tseslint.config(
   // ...tseslint.configs.stylisticTypeChecked,
   eslintPluginPrettierRecommended,
   {
-    files: ["**/*.js", "**/*.ts"],
+    files: ['**/*.js', '**/*.ts'],
     languageOptions: {
       globals: {
         ...globals.node,

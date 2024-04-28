@@ -22,8 +22,7 @@ export class FirebaseExceptionFilter implements ExceptionFilter {
     });
   }
 
-
-  
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   private getStatus(code: string) {
     // TODO: Provide a more detailed status code.
     return HttpStatus.INTERNAL_SERVER_ERROR;
