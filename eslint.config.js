@@ -13,10 +13,6 @@ export default tseslint.config(
   {
     files: ["**/*.js", "**/*.ts"],
     languageOptions: {
-      parserOptions: {
-        project: 'tsconfig.json',
-        sourceType: 'module',
-      },
       globals: {
         ...globals.node,
         ...globals.jest,
