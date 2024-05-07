@@ -79,6 +79,5 @@
     "coverageDirectory": "../coverage",
     "preset": "@shelf/jest-mongodb"
   },
-  "packageManager": "yarn@3.6.4",
-  "type": "module"
+  "packageManager": "yarn@3.6.4"
 }

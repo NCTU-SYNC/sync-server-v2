@@ -23,5 +23,5 @@ jobs:
         run: |
           yarn run eslint \
             --max-warnings 0 \
-            --format .github/actions/eslint-formatter-github-action.js \
+            --format .github/actions/eslint-formatter-github-action.mjs \
             src test
