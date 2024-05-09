@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, Types } from 'mongoose';
+import { Model, QueryOptions, Types } from 'mongoose';
 import { News, NewsDocument } from './schemas/news.schema';
 
 @Injectable()
@@ -9,6 +9,13 @@ export class NewsService {
     @InjectModel(News.name)
     private readonly newsModel: Model<NewsDocument>,
   ) {}
+
+  async findAll(
+    filter?: object,
+    options: QueryOptions = { limit: 30 },
+  ): Promise<News[]> {
+    return this.newsModel.find(filter ?? {}, null, options).exec();
+  }
 
   async findOneById(id: Types.ObjectId): Promise<News> {
     return this.newsModel.findById(id).exec();
