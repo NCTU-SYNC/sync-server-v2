@@ -38,7 +38,7 @@ export class Block {
 
 const BlockSchema = SchemaFactory.createForClass(Block);
 
-@Schema()
+@Schema({ collection: 'Articles' })
 export class Article {
   @Prop({ required: true })
   title: string;
