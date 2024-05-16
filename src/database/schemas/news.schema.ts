@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
 
-@Schema()
+@Schema({ collection: 'News' })
 export class News {
   @Prop({ required: true, type: mongoose.Schema.Types.ObjectId })
   newsId: mongoose.Types.ObjectId;
