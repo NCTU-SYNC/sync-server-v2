@@ -1,4 +1,4 @@
-name: Lint Check
+name: lint check
 
 on:
   push:
@@ -7,6 +7,10 @@ on:
   pull_request:
     branches:
       - main
+    types:
+      - opened
+      - synchronize
+      - reopened
 
 jobs:
   lint:
