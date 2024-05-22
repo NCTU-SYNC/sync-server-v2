@@ -1,10 +1,5 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
-import { ApiOperation, ApiTags, ApiQuery, ApiParam } from '@nestjs/swagger';
-import { ArticleService } from '../article.service';
-import { Article } from '../schemas/article.schema';
-import { Types } from 'mongoose';
-
 import { Body, Controller, Get, Param, Put, Query } from '@nestjs/common';
+import { ApiOperation, ApiTags, ApiQuery, ApiParam } from '@nestjs/swagger';
 import { ArticleService } from '../article.service';
 import { Article } from '../schemas/article.schema';
 import { Types } from 'mongoose';
