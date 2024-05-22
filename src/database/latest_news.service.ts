@@ -1,33 +1,19 @@
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model, Types } from 'mongoose';
-import { LatestNews, LatestNewsDocument } from './schemas/latest_news.schema';
+import { LatestNews } from './schemas/latest_news.schema';
 
 @Injectable()
 export class LatestNewsService {
-  constructor(
-    @InjectModel(LatestNews.name)
-    private readonly latestNewsModel: Model<LatestNewsDocument>,
-  ) {}
+  private latestNewsCache: LatestNews[] = [];
+  private readonly cacheSize: number = 10;
 
-  async findOneById(id: Types.ObjectId): Promise<LatestNews> {
-    return this.latestNewsModel.findById(id).exec();
+  findAll(): LatestNews[] {
+    return this.latestNewsCache;
   }
 
-  async createOne(latestNews: LatestNews): Promise<LatestNews> {
-    return this.latestNewsModel.create(latestNews);
-  }
-
-  async updateOneById(
-    id: Types.ObjectId,
-    partialLatestNews: Partial<LatestNews>,
-  ) {
-    return this.latestNewsModel
-      .updateOne({ _id: id }, partialLatestNews)
-      .exec();
-  }
-
-  async deleteOneById(id: Types.ObjectId) {
-    return this.latestNewsModel.deleteOne({ _id: id }).exec();
+  async pushOne(latestNews: LatestNews): Promise<void> {
+    if (this.latestNewsCache.length === this.cacheSize) {
+      this.latestNewsCache.shift();
+    }
+    this.latestNewsCache.push(latestNews);
   }
 }
